@@ -1,29 +1,35 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Cormorant_Garamond } from "next/font/google";
+import { Toast } from "@/components/ui/common";
 import "./globals.css";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+import "./kingdom.css";
+const sans = Geist({ variable: "--font-body", subsets: ["latin"] });
+const serif = Cormorant_Garamond({
+  variable: "--font-display",
   subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  style: ["normal", "italic"],
 });
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
 export const metadata: Metadata = {
-  title: "MealTale | Kitchen Keeper",
-  description: "An enchanted kitchen for every Kitchen Keeper. Plan meals, keep ingredients, and discover recipes.",
+  title: {
+    default: "MealTale — The Enchanted Kitchen",
+    template: "%s | MealTale",
+  },
+  description:
+    "Your enchanted kitchen awaits. Keep ingredients fresh, discover recipes, plan royal feasts, and give everyday cooking a little magic.",
+  icons: { icon: "/branding/crest.svg" },
 };
-
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
-    <html
-      lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
-    >
-      <body className="min-h-full flex flex-col">{children}</body>
+    <html lang="en" className={`${sans.variable} ${serif.variable}`}>
+      <body>
+        {children}
+        <Toast />
+      </body>
     </html>
   );
 }
