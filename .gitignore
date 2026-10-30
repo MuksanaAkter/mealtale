@@ -49,3 +49,6 @@ dist/
 .agents/
 AGENTS.md
 graphify-out/
+
+# Local PostgreSQL data
+.local/

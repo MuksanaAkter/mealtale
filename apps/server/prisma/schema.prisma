@@ -1,0 +1,136 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String @id @default(cuid())
+  name         String
+  email        String @unique
+  passwordHash String
+  createdAt    DateTime @default(now())
+  sessions     Session[]
+  ingredients  Ingredient[]
+  favorites    FavoriteRecipe[]
+  lists        ShoppingList[]
+  meals        MealPlan[]
+  notifications Notification[]
+  activities   InventoryActivity[]
+}
+
+model Session {
+  id        String @id
+  userId    String
+  expiresAt DateTime
+  user      User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  @@index([userId])
+}
+
+model Ingredient {
+  id           String @id @default(cuid())
+  userId       String
+  name         String
+  category     String
+  quantity     Float
+  unit         String
+  image        String @default("/illustrations/ingredients.svg")
+  purchasedAt  DateTime
+  expiresAt    DateTime
+  location     String
+  createdAt    DateTime @default(now())
+  user         User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  @@index([userId, expiresAt])
+}
+
+model Recipe {
+  id           String @id
+  name         String
+  description  String
+  category     String
+  image        String
+  duration     Int
+  difficulty   String
+  servings     Int
+  instructions String[]
+  ingredients  RecipeIngredient[]
+  favorites    FavoriteRecipe[]
+  meals        MealPlan[]
+}
+
+model RecipeIngredient {
+  id       String @id @default(cuid())
+  recipeId String
+  name     String
+  quantity Float
+  unit     String
+  recipe   Recipe @relation(fields: [recipeId], references: [id], onDelete: Cascade)
+}
+
+model FavoriteRecipe {
+  userId   String
+  recipeId String
+  user     User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  recipe   Recipe @relation(fields: [recipeId], references: [id], onDelete: Cascade)
+  @@id([userId, recipeId])
+}
+
+model ShoppingList {
+  id        String @id @default(cuid())
+  userId    String
+  name      String
+  createdAt DateTime @default(now())
+  user      User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  items     ShoppingListItem[]
+  @@index([userId])
+}
+
+model ShoppingListItem {
+  id        String @id @default(cuid())
+  listId    String
+  name      String
+  category  String
+  quantity  Float
+  unit      String
+  purchased Boolean @default(false)
+  list      ShoppingList @relation(fields: [listId], references: [id], onDelete: Cascade)
+  @@index([listId])
+}
+
+model MealPlan {
+  id       String @id @default(cuid())
+  userId   String
+  recipeId String
+  date     DateTime @db.Date
+  slot     String
+  user     User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  recipe   Recipe @relation(fields: [recipeId], references: [id], onDelete: Cascade)
+  @@unique([userId, date, slot])
+}
+
+model Notification {
+  id        String @id @default(cuid())
+  userId    String
+  key       String
+  message   String
+  read      Boolean @default(false)
+  createdAt DateTime @default(now())
+  user      User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  @@unique([userId, key])
+}
+
+model InventoryActivity {
+  id        String @id @default(cuid())
+  userId    String
+  name      String
+  category  String
+  action    String
+  quantity  Float
+  unit      String
+  createdAt DateTime @default(now())
+  user      User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  @@index([userId, createdAt])
+}

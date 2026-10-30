@@ -1,13 +1,3 @@
-# Server modules
+# Feature boundaries
 
-Feature folders own their HTTP handlers, business rules, and validation once implemented.
-
-- `auth/`: authentication integration and Kitchen Keeper identity.
-- `royal-vault/`: ingredients, quantities, expiry tracking.
-- `ancient-cookbook/`: recipes and ingredient matching.
-- `market-quest/`: shopping lists generated from recipes and inventory.
-- `royal-feast/`: meal planning.
-- `alerts/`: expiry notifications.
-- `analytics/`: waste, pantry usage, and meal summaries.
-
-Validate inputs and enforce user ownership before exposing data routes. The current server exposes only `GET /health`.
+HTTP route dispatch and account ownership checks currently live in `src/app.ts`; matching and starter data are in `src/services/`, and Prisma/password/session primitives are in `src/lib/`. These feature folders retain the roadmap boundaries for future extraction as each feature grows. They do not provide additional endpoints.

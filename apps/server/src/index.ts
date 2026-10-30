@@ -10,4 +10,6 @@ server.on("error", (error) => {
   console.error(error);
   process.exitCode = 1;
 });
-server.listen(port, () => console.log(`MealTale server listening on port ${port}`));
+server.listen(port, process.env.HOST ?? "127.0.0.1", () =>
+  console.log(`MealTale server listening on port ${port}`),
+);

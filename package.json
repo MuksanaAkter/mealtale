@@ -2,21 +2,25 @@
   "name": "mealtale",
   "version": "0.1.0",
   "private": true,
-  "workspaces": [
-    "apps/*"
-  ],
   "engines": {
     "node": ">=22.18.0"
   },
   "scripts": {
-    "dev": "npm run dev:web",
-    "dev:web": "npm run dev --workspace=@mealtale/web",
-    "dev:server": "npm run dev --workspace=@mealtale/server",
-    "build": "npm run build --workspace=@mealtale/web",
-    "start": "npm run start --workspace=@mealtale/web",
-    "start:server": "npm run start --workspace=@mealtale/server",
-    "lint": "npm run lint --workspace=@mealtale/web",
-    "typecheck": "npm run typecheck --workspaces --if-present",
-    "test": "npm run test --workspaces --if-present"
-  }
+    "dev": "pnpm run db:start && pnpm --parallel --filter @mealtale/web --filter @mealtale/server run dev",
+    "dev:web": "pnpm --filter @mealtale/web dev",
+    "dev:server": "pnpm --filter @mealtale/server dev",
+    "build": "pnpm --filter @mealtale/web build",
+    "start": "pnpm --filter @mealtale/web start",
+    "start:server": "pnpm --filter @mealtale/server start",
+    "lint": "pnpm --filter @mealtale/web lint",
+    "typecheck": "pnpm -r --if-present run typecheck",
+    "test": "pnpm -r --if-present run test",
+    "db:start": "node scripts/local-db.mjs",
+    "db:generate": "pnpm --filter @mealtale/server db:generate",
+    "db:migrate": "pnpm --filter @mealtale/server db:migrate",
+    "db:seed": "pnpm --filter @mealtale/server db:seed",
+    "setup": "pnpm run db:start && pnpm run db:generate && pnpm run db:migrate && pnpm run db:seed",
+    "db:seed:demo": "pnpm --filter @mealtale/server db:seed:demo"
+  },
+  "packageManager": "pnpm@10.30.1"
 }

@@ -10,10 +10,19 @@
     "dev": "node --env-file-if-exists=.env --watch src/index.ts",
     "start": "node --env-file-if-exists=.env src/index.ts",
     "typecheck": "tsc --noEmit",
-    "test": "node --test src/app.test.ts"
+    "test": "node --env-file-if-exists=.env --test src/*.test.ts src/services/*.test.ts",
+    "db:generate": "prisma generate",
+    "db:migrate": "prisma migrate deploy",
+    "db:seed": "node --env-file-if-exists=.env prisma/seed.ts",
+    "db:seed:demo": "node --env-file-if-exists=.env prisma/seed.ts --demo"
   },
   "devDependencies": {
     "@types/node": "^20",
+    "prisma": "6.19.0",
     "typescript": "^5"
+  },
+  "dependencies": {
+    "@prisma/client": "6.19.0",
+    "zod": "^4.6.7"
   }
 }

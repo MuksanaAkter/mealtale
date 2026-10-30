@@ -1,13 +1,21 @@
-# MealTale roadmap
+# MealTale implementation
 
-A magical kingdom's kitchen. The user is its **Kitchen Keeper**.
+The user is the Kitchen Keeper of an enchanted medieval kitchen.
 
-1. **Project Setup:** repository, Next.js, TypeScript, Tailwind, independent web/server packages. Workspace structure and server health starter are ready; repository hosting is separate.
-2. **Fantasy Design System:** forest green, parchment, gold, typography, accessible UI primitives, reduced-motion animations.
-3. **Cinematic Landing Page:** hero, kingdom story, feature introductions, CTA, responsive design.
-4. **Authentication & Database:** Auth.js in the web app; PostgreSQL and Prisma in the server. Define how the server verifies identity before protected endpoints are implemented.
-5. **Dashboard & Core Features:** Royal Vault (pantry), Ancient Cookbook (recipes), Market Quest (shopping), Royal Feast (meal plans).
-6. **Smart Features:** expiry alerts, ingredient-based matching, generated shopping lists, usage/waste analytics.
-7. **Testing & Deployment:** validation, ownership/security checks, feature tests, performance checks, README, Vercel for web and a separate Node host for server.
+1. **Project setup:** pnpm workspace with separate Next.js web and Node.js API packages, TypeScript, Tailwind, reusable UI and feature folders.
+2. **Fantasy design system:** forest, moss, parchment, gold; Cormorant Garamond headings, Geist body; accessible dialogs, forms, cards, notices, responsive navigation.
+3. **Story landing:** original generated environment artwork, story, four kingdom features, journey, working registration and private demo entry.
+4. **Accounts and PostgreSQL:** Prisma schema/migration, salted scrypt passwords, hashed opaque database sessions, protected layouts, account-scoped APIs. A custom credentials/session implementation is used rather than Auth.js.
+5. **Core features:** ingredient CRUD/search/filter/sort, recipe discovery/favorites/details, shopping lists/items/quantity edits, weekly meal planning and replacement/removal.
+6. **Smart features:** exact ingredient and unit-aware matching, expiry exclusions, missing-ingredient market lists, pantry deduction on cooking, in-app freshness alerts, event-based Recharts analytics.
+7. **Verification:** strict TypeScript, ESLint, production build, matcher unit tests, HTTP smoke test, PostgreSQL integration/ownership tests, and browser checks.
 
-Only phase 01's structure is implemented. Reserved folders and feature descriptions do not indicate working functionality.
+## Deliberate boundaries
+
+- Matching is deterministic, not an AI integration.
+- Notifications are in-app, refreshed on pantry reads or mutations. No email/push delivery or scheduled worker is configured.
+- Recipes are a seeded shared catalog; user-created recipes are not part of this version.
+- Password reset, email verification, and email address changes are not implemented.
+- The login/demo rate limiter is process-local; multi-instance public deployment should use a shared rate limiter.
+- Demo accounts persist as isolated accounts. Configure a retention policy before offering unrestricted public demos.
+- The frontend and backend are ready to configure for their hosting environments; no deployment was requested or performed.
