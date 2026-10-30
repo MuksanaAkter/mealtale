@@ -1,3 +1,3 @@
-Future `/ancient-cookbook` route, implemented during phases 05–06.
+# ancient-cookbook
 
-Add `page.tsx` only when the screen is implemented. Route groups do not change URLs. Kingdom routes will require authentication before handling private data.
+`page.tsx` renders this feature inside the authenticated kingdom layout. The implementation lives in `src/components/kingdom/`. Database operations go through the separate server API.

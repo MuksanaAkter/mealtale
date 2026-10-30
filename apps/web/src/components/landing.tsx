@@ -1,7 +1,12 @@
 "use client";
 import Link from "next/link";
 import Image from "next/image";
-import { motion, useReducedMotion } from "motion/react";
+import {
+  motion,
+  useReducedMotion,
+  useScroll,
+  useTransform,
+} from "motion/react";
 import {
   ArrowRight,
   ArrowUpRight,
@@ -50,6 +55,8 @@ const features = [
 ];
 export default function Landing() {
   const reduce = useReducedMotion();
+  const { scrollY } = useScroll();
+  const drift = useTransform(scrollY, [0, 900], [0, 140]);
   const router = useRouter();
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
@@ -90,14 +97,16 @@ export default function Landing() {
         </div>
       </header>
       <section className="hero">
-        <Image
-          src="/backgrounds/enchanted-kitchen.png"
-          alt="A candlelit royal kitchen overlooking an enchanted castle and misty mountains"
-          fill
-          priority
-          sizes="100vw"
-          className="hero-art"
-        />
+        <motion.div className="hero-picture" style={{ y: reduce ? 0 : drift }}>
+          <Image
+            src="/backgrounds/enchanted-kitchen.png"
+            alt="A candlelit royal kitchen overlooking an enchanted castle and misty mountains"
+            fill
+            priority
+            sizes="100vw"
+            className="hero-art"
+          />
+        </motion.div>
         <div className="hero-shade" />
         <div className="embers" aria-hidden="true">
           {Array.from({ length: 12 }, (_, i) => (

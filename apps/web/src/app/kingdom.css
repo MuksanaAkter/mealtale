@@ -4058,3 +4058,51 @@ td {
     font-size: 10px;
   }
 }
+.hero-picture {
+  position: absolute;
+  inset: 0;
+  z-index: -3;
+  will-change: transform;
+}
+.hero-picture .hero-art {
+  z-index: auto;
+}
+.landing-header .brand {
+  animation: logo-reveal 0.9s ease-out both;
+}
+.dashboard-main {
+  animation: page-reveal 0.3s ease-out;
+}
+@keyframes logo-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes page-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@media (max-width: 700px) {
+  .sidebar {
+    visibility: hidden;
+  }
+  .sidebar.is-open {
+    visibility: visible;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-picture {
+    will-change: auto;
+  }
+}

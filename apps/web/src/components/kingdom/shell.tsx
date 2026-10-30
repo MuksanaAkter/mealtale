@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import {
@@ -38,6 +38,14 @@ export function KingdomShell({ children }: { children: React.ReactNode }) {
   const [menu, setMenu] = useState(false);
   const [notifications, setNotifications] = useState(false);
   const notify = useUI((s) => s.notify);
+  useEffect(() => {
+    if (!menu) return;
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setMenu(false);
+    };
+    window.addEventListener("keydown", closeOnEscape);
+    return () => window.removeEventListener("keydown", closeOnEscape);
+  }, [menu]);
   async function logout() {
     try {
       await api("auth/logout", "POST");
@@ -56,7 +64,10 @@ export function KingdomShell({ children }: { children: React.ReactNode }) {
           onClick={() => setMenu(false)}
         />
       )}
-      <aside className={`sidebar ${menu ? "is-open" : ""}`}>
+      <aside
+        id="kingdom-sidebar"
+        className={`sidebar ${menu ? "is-open" : ""}`}
+      >
         <div className="sidebar-brand">
           <Brand />
           <button
@@ -120,6 +131,8 @@ export function KingdomShell({ children }: { children: React.ReactNode }) {
               className="icon-button mobile-only"
               onClick={() => setMenu(true)}
               aria-label="Open navigation"
+              aria-expanded={menu}
+              aria-controls="kingdom-sidebar"
             >
               <Menu size={21} />
             </button>

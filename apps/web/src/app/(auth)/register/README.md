@@ -1,3 +1,3 @@
-Future `/register` route, implemented during phase 04.
+# Keeper authentication
 
-Add `page.tsx` only when the screen is implemented. Route groups do not change URLs. Kingdom routes will require authentication before handling private data.
+`page.tsx` renders the shared validated account form. The server hashes passwords and manages opaque database sessions.

@@ -1,3 +1,3 @@
 # Web utilities
 
-`constants/kingdom.ts` holds product copy and feature destinations. `api/` is reserved for the server HTTP client, `validations/` for form validation, and `auth/` for the future Auth.js integration. Database access and Prisma belong to `apps/server`; never import database code into browser components.
+`api/client.ts` calls the same-origin Next.js API proxy. `types.ts` defines feature view types and date/quantity helpers. The web never imports Prisma or database credentials. Authentication and all business operations are verified by the separate server.

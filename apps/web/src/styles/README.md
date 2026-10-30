@@ -1,3 +1,3 @@
-# Fantasy design system — phase 02
+# Fantasy design system
 
-Direction: enchanted forest green, parchment backgrounds, antique gold, plum accents; readable serif headings and simple body text. Define shared colors, spacing, typography, focus states, and reduced-motion animation rules here when phase 02 begins.
+The working design tokens and styles are in `src/app/kingdom.css`; `globals.css` imports Tailwind. Cormorant Garamond headings and Geist body text are configured in the root layout. Palette: forest, moss, antique gold, parchment, and dark wood. Motion honors reduced-motion preferences.
