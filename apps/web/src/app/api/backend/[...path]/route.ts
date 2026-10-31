@@ -1,4 +1,7 @@
 import type { NextRequest } from "next/server";
+import { backendURL, API_TIMEOUT_MS, API_UNAVAILABLE } from "@/lib/api/backend";
+
+export const maxDuration = 90;
 
 async function proxy(
   request: NextRequest,
@@ -14,7 +17,7 @@ async function proxy(
     return Response.json({ error: "Invalid path" }, { status: 400 });
   try {
     const response = await fetch(
-      `${process.env.API_URL ?? "http://127.0.0.1:4000"}/api/${path.join("/")}`,
+      `${backendURL()}/api/${path.join("/")}`,
       {
         method: request.method,
         headers: {
@@ -24,7 +27,7 @@ async function proxy(
         },
         ...(request.method === "GET" ? {} : { body: await request.text() }),
         cache: "no-store",
-        signal: AbortSignal.timeout(20000),
+        signal: AbortSignal.timeout(API_TIMEOUT_MS),
       },
     );
     const headers = new Headers({
@@ -37,11 +40,12 @@ async function proxy(
       status: response.status,
       headers,
     });
-  } catch {
+  } catch (error) {
+    console.error("MealTale API connection failed:", error instanceof Error ? error.name : "Unknown error");
     return Response.json(
       {
         error:
-          "The kitchen server is resting. Run pnpm run dev from the project root.",
+          API_UNAVAILABLE,
       },
       { status: 503 },
     );

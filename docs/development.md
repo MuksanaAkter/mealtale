@@ -121,6 +121,6 @@ Current boundaries:
 - Notifications are in-app; scheduled email and push delivery are not configured.
 - Password reset, email verification, and email-address changes are not implemented.
 - Authentication is custom database-session auth; Auth.js is not installed.
-- A production deployment has not been performed.
+- Production environment changes and deployments require access to the Vercel and Render projects.
 
 See [the implementation roadmap](roadmap.md) for the completed flow and remaining extensions.

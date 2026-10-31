@@ -1,3 +1,4 @@
+import { backendURL, API_TIMEOUT_MS, API_UNAVAILABLE } from "@/lib/api/backend";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { KingdomProvider } from "@/components/kingdom/provider";
@@ -14,11 +15,11 @@ export default async function KingdomLayout({
   let response: Response;
   try {
     response = await fetch(
-      `${process.env.API_URL ?? "http://127.0.0.1:4000"}/api/state`,
+      `${backendURL()}/api/state`,
       {
         headers: { cookie: `mealtale_session=${cookie.value}` },
         cache: "no-store",
-        signal: AbortSignal.timeout(15000),
+        signal: AbortSignal.timeout(API_TIMEOUT_MS),
       },
     );
   } catch {
@@ -26,8 +27,7 @@ export default async function KingdomLayout({
       <main className="unavailable">
         <h1>The kitchen is resting.</h1>
         <p>
-          Start the database and both apps with <code>pnpm run dev</code>, then
-          refresh this page.
+          {API_UNAVAILABLE} Refresh this page to reconnect.
         </p>
         <Link className="button button-forest" href="/">
           Back to MealTale

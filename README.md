@@ -143,7 +143,7 @@ Charts use the latest 2,000 account activity records. Unlike quantities such as 
 
 ## Three Demo Accounts
 
-These are **shared local development accounts**, with regular user permissions. All three use this password:
+These are **shared demo accounts**, with regular user permissions. All three use this password:
 
 ```text
 Keeper@12345
@@ -163,7 +163,7 @@ Keeper@12345
 - Two favorite recipes, as listed above.
 - Actual inventory activity entries for its starter ingredients.
 
-These accounts belong to the local demo database. Production accounts are created separately. Demo details are preserved when the seed is rerun.
+These accounts are created in any database where demo seeding is explicitly enabled, including the live demo deployment. Existing passwords and pantry data are preserved when the seed is rerun. These public logins share editable sample data; use a personal account for your own kitchen.
 
 **Prefer a fresh exploration?** The landing page’s **Take a look around** button creates a separate, private demo account with sample pantry data instead of using one of these shared logins.
 
@@ -218,8 +218,8 @@ mealtale/
 │   │       ├── app/                 # Pages, layouts, auth/kingdom groups, API proxy
 │   │       ├── components/
 │   │       │   ├── kingdom/         # Feature views and kingdom shell
+│   │       │   ├── landing/         # Interactive kitchen story and 3D book
 │   │       │   └── ui/              # Brand, modal, loading, toast
-│   │       ├── hooks/               # Custom-hook extension point
 │   │       ├── lib/                 # API client, shared types, helpers
 │   │       └── store/               # Zustand UI state
 │   └── server/                      # Independent Node.js API

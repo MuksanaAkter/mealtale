@@ -19,12 +19,8 @@ const demoAccounts = [
     favorites: ["golden-pasta", "feast-chicken"],
   },
 ];
-const seedDemos = process.argv.includes("--demo");
-if (seedDemos && process.env.NODE_ENV === "production") {
-  throw new Error(
-    "Known demo credentials cannot be seeded with NODE_ENV=production. Run db:seed for the recipe catalog only.",
-  );
-}
+const seedDemos =
+  process.argv.includes("--demo") || process.env.SEED_DEMO_ACCOUNTS === "true";
 
 try {
   await seedRecipes();
